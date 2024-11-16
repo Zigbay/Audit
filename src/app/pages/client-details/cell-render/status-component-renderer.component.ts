@@ -35,7 +35,7 @@ import { CommonModule } from '@angular/common';
 .step {
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 1px 2px;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
   border: 2px solid #ccc; /* Default border color for all steps */
@@ -51,6 +51,12 @@ import { CommonModule } from '@angular/common';
 
 .step.follow-up {
   background-color: #ff9800; /* Yellow background for "Follow Up" */
+  color: black;
+  border-color: #ff9800;
+}
+
+.step.collection {
+  background-color: #03b6fc; /* Yellow background for "Collection" */
   color: black;
   border-color: #ff9800;
 }
@@ -122,22 +128,22 @@ export class StatusComponentRenderer implements ICellRendererAngularComp {
 
   onStatusClick(status: any) {
     console.log(status,this.params);
-    const selection = this.steps[status] == 'Due' ? 'due' : this.steps[status] == 'Completed'? 'completed':'followUp' ;
+    const selection = this.steps[status] == 'Due' ? 'due' : this.steps[status] == 'Completed'? 'completed':this.steps[status] == 'Collection'? 'collection':'followUp' ;
     this.params.context.componentParent.updateDetailGridOptions(selection);
     console.log(selection);
     setTimeout(()=>{this.toggleSection(selection)},10);
-    
+
    // this.params.node.setExpanded(!this.params.node.expanded); // Toggle row expansion
     console.log(this.params.node,this.params.node.expanded);
    // this.toggleSection(selection);
     // Optionally, send additional data about the clicked status to the main grid component
     console.log(`Status clicked: ${status} ${this.params.context.componentParent.currentExpanded}`);
-    
+
     // Add further actions based on the clicked status
   }
 
- 
-  steps = ['Due', 'Follow Up', 'Completed'];
+
+  steps = ['Due', 'Follow Up', 'Collection', 'Completed'];
   currentStepIndex = 0;
   clickedStepIndex: number | null = null; // Track the clicked step index
 
@@ -155,8 +161,11 @@ export class StatusComponentRenderer implements ICellRendererAngularComp {
       case 'followUp':
         this.currentStepIndex = 1;
         break;
-      case 'completed':
+      case 'collection':
         this.currentStepIndex = 2;
+        break;
+      case 'completed':
+        this.currentStepIndex = 3;
         break;
       default:
         this.currentStepIndex = 0;
@@ -174,7 +183,7 @@ export class StatusComponentRenderer implements ICellRendererAngularComp {
 
   goToStep(index: number) {
     // Set clicked step index without changing the actual status
-   
+
     if (this.isStepEnabled(index)) {
       this.clickedStepIndex = index;
     }
@@ -203,6 +212,8 @@ export class StatusComponentRenderer implements ICellRendererAngularComp {
       updatedDetailGridOptions = this.params.context.componentParent.detailGridOptionsCompleted;
     } else if (status === 'Follow Up') {
       updatedDetailGridOptions = this.params.context.componentParent.detailGridOptionsFollowUp;
+    } else if (status === 'Collection') {
+      updatedDetailGridOptions = this.params.context.componentParent.detailGridOptionsCollection;
     } else if (status === 'Due') {
       updatedDetailGridOptions = this.params.context.componentParent.detailGridOptionsDue;
     }
@@ -214,7 +225,7 @@ export class StatusComponentRenderer implements ICellRendererAngularComp {
       getDetailRowData: (params:any) => {
         // Pass the details to the detail row based on the status
          console.log(params);
-        params.successCallback(params.data.detailInfo[status == 'Due' ? 'due' : status == 'Follow Up'? 'followUp' : 'completed']);
+        params.successCallback(params.data.detailInfo[status == 'Due' ? 'due' : status == 'Follow Up'? 'followUp':status == 'Collection'? 'collection' : 'completed']);
       }
     };
     console.log(this.params.api.getDetailCellRendererParams)

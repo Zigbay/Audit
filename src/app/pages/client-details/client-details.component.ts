@@ -29,7 +29,7 @@ ModuleRegistry.registerModules([
   SetFilterModule,
   MultiFilterModule,
   MasterDetailModule,
-  
+
 ]);
 
 
@@ -37,6 +37,7 @@ const statuses = {
   all: 'All',
   due: 'Due',
   followUp: 'Follow up',
+  collection: 'Collection',
   completed: 'Completed'
 };
 
@@ -53,6 +54,15 @@ const detailGridOptionsFollowUp = {
     { headerName: 'Followed By', field: 'followedBy' },
     { headerName: 'Followed Person', field: 'followedPerson' },
     { headerName: 'Followed Date', field: 'followedDate' },
+    { headerName: 'Collect Date', field: 'collectDate' },
+    { headerName: 'Comment', field: 'comment' }
+  ]
+};
+
+const detailGridOptionsCollection = {
+  columnDefs: [
+    { headerName: 'Followed By', field: 'followedBy' },
+    { headerName: 'Followed Person', field: 'followedPerson' },
     { headerName: 'Collect Date', field: 'collectDate' },
     { headerName: 'Comment', field: 'comment' }
   ]
@@ -130,7 +140,7 @@ export class ClientDetailsComponent {
     {
       field: 'address',
       headerName: 'Address',
-      //filter: true,
+//       filter: true,
       headerClass: 'header-status',
     },
     // {
@@ -141,10 +151,10 @@ export class ClientDetailsComponent {
     // },
     {
       field: 'status',
-      headerName: 'Status', 
+      headerName: 'Status',
       // valueFormatter: statusFormatter,
       // cellRenderer: StatusCellRenderer,
-       filter: true,
+//        filter: true,
       // filterParams: {
       //   valueFormatter: statusFormatter,
       // },
@@ -158,13 +168,13 @@ export class ClientDetailsComponent {
       //  }
       cellRenderer:StatusComponentRenderer
     }
-    
+
   ];
 
   gridContext = {
     componentParent: this
   };
-  
+
   defaultColDef: ColDef = {
     resizable: false,
   };
@@ -203,7 +213,17 @@ export class ClientDetailsComponent {
           params.successCallback(params.data.detailInfo['due']);
         }
       };
-    }else{
+    } else if(status === 'collection'){
+           this.detailCellRendererParams = {
+             ...this.detailCellRendererParams,
+             detailGridOptions: this.detailGridOptionsCollection,
+             getDetailRowData: (params) => {
+               console.log('collection',params);
+               params.successCallback(params.data.detailInfo['collection']);
+             }
+           };
+         }
+  else{
       this.detailCellRendererParams = {
         ...this.detailCellRendererParams,
         detailGridOptions: this.detailGridOptionsFollowUp,
@@ -252,7 +272,7 @@ export class ClientDetailsComponent {
       params.successCallback(params.data.detailInfo['due']);
     }
   };
-  
+
    detailGridOptionsFollowUp = {
     columnDefs: [
       { headerName: 'Followed By', field: 'followedBy' },
@@ -267,7 +287,21 @@ export class ClientDetailsComponent {
       params.successCallback(params.data.detailInfo['followUp']);
     }
   };
-  
+
+   detailGridOptionsCollection = {
+    columnDefs: [
+      { headerName: 'Followed By', field: 'followedBy' },
+      { headerName: 'Followed Person', field: 'followedPerson' },
+      { headerName: 'Collect Date', field: 'collectDate' },
+      { headerName: 'Comment', field: 'comment' }
+    ],
+    defaultColDef: { flex: 1 },
+      headerHeight: 38,
+    getDetailRowData: (params:any) => {
+      params.successCallback(params.data.detailInfo['collection']);
+    }
+  };
+
    detailGridOptionsCompleted = {
     columnDefs: [
       { headerName: 'Collect By', field: 'collectedBy' },

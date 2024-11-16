@@ -9,14 +9,14 @@ export function getData() {
       "address": "5678 Maple St, City",
       "payment_due_date": "2024-12-01",
       "total_due_amount": 19000,
-      "status": "completed",
+      "status": "collection",
       "detailInfo": {
         "due": [
           {
             "initiatedDate": "2024-11-01",
             "totalDue": "1",
             "dueAmount": "19000"
-          }
+          },
         ],
         "followUp": [
           {
@@ -25,6 +25,14 @@ export function getData() {
             "followedDate": "2024-11-15",
             "collectDate": "2024-11-20",
             "comment": "Follow-up call made"
+          }
+        ],
+      "collection": [
+        {
+          "followedBy": "Raj",
+          "followedPerson": "Rachel Green",
+          "collectDate": "2024-11-20",
+          "comment": "collection comment"
           }
         ],
         "completed": [
@@ -125,6 +133,6 @@ export function getData() {
       }
     }
   ]
-  
+
   return data;
 }
