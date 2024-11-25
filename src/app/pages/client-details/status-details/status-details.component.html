@@ -1,0 +1,26 @@
+
+    <div
+    class="stepper"
+    >
+      <button class="btn disable-click" [class]="data?.status == 'completed' ? 'btn-success' : data?.status == 'followUp' ? 'btn-warning' : 'btn-danger'">{{getStatus(data?.status)}}</button>
+      <button class="btn btn-info" (click)="getRowInfo($event);openModal(data,template)">View Details</button>
+    </div>
+
+    <!-- <div class="container mt-5">
+        <button class="btn btn-primary" (click)="openModal(template)">Open Modal</button>
+      
+        <!-- Modal Template >
+        
+      </div> -->
+      <ng-template #template>
+        <div class="modal-header">
+          <h4 class="modal-title">{{clientDetail.client_name}} {{'Payment Details'}}</h4>
+          <button type="button" class="close" (click)="modalRef?.hide()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <app-status-renderer [rowInfo]="clientDetail"></app-status-renderer>
+        </div>
+        <div class="modal-footer ">
+          <button class="btn btn-secondary custom-width" width="10" (click)="modalRef?.hide()">Close</button>
+        </div>
+      </ng-template>

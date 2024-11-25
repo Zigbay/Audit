@@ -30,7 +30,7 @@ export function getData() {
         "completed": [
           {
             "collectedBy": "Raj",
-            "collectedFrom": "Rachel Green",
+            "collectedFrom": "Rachel Red",
             "collectedOn": "22/11/2024"
           }
         ]

@@ -22,6 +22,7 @@ import { getData } from './data';
 import { AgGridAngular } from '@ag-grid-community/angular';
 import { FormsModule } from '@angular/forms';
 import { StatusComponentRenderer } from './cell-render/status-component-renderer.component';
+import { StatusDetailsComponent } from './status-details/status-details.component';
 
 ModuleRegistry.registerModules([
   ClientSideRowModelModule,
@@ -76,7 +77,7 @@ const statusFormatter: ValueFormatterFunc = ({ value }) =>
   providers:[],
   imports: [ AgGridAngular,
     FormsModule,
-    StatusComponentRenderer
+    StatusDetailsComponent
     ],
   templateUrl: './client-details.component.html',
   styleUrl: './client-details.component.scss',
@@ -156,7 +157,8 @@ export class ClientDetailsComponent {
       //     console.log(params);
       //     return params.value;},
       //  }
-      cellRenderer:StatusComponentRenderer
+      cellRenderer:StatusDetailsComponent,
+      flex: 1,  //
     }
     
   ];

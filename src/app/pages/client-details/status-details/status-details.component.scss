@@ -1,0 +1,32 @@
+// .btn{
+//     margin-right:10px;
+//     display: flex;
+//     align-content: space-evenly;
+// }
+
+.stepper {
+    display: flex;              /* Use Flexbox for layout */
+    justify-content: space-between; /* Distribute space evenly between buttons */
+  }
+  
+  .btn {
+    flex: 1;                   /* Make buttons take up equal width */
+    margin: 5px;               /* Optional: adds space between buttons */
+    padding: 10px;             /* Optional: add padding inside buttons */
+    text-align: center;  
+    width:100px;      /* Center the text inside buttons */
+  }
+
+  .disable-click {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .modal-footer .btn {
+    width: auto; /* Reset any inherited width */
+    min-width: 100px; /* Set your desired width */
+  }
+
+  .custom-width {
+    max-width: 90px;
+  }

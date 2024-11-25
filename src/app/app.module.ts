@@ -10,6 +10,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { CollapseModule } from 'ngx-bootstrap/collapse'; 
+
+
 
 
 
@@ -26,7 +30,9 @@ import { AgGridModule } from 'ag-grid-angular';
     BrowserAnimationsModule,
    AppRoutingModule,
     CommonModule,
-    AgGridModule
+    AgGridModule,
+    ModalModule.forRoot(),
+    CollapseModule.forRoot()
    // HighchartsChartModule,
     //FullCalendarModule,
     //CollapseModule.forRoot(),

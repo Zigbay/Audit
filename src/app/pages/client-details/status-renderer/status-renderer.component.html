@@ -1,0 +1,163 @@
+<!-- <div class="stepper">
+    <div
+      *ngFor="let step of steps; let i = index"
+      class="step"
+      [ngClass]="{
+        due: clientStatus === 'due' && i === currentStepIndex,
+        'follow-up': clientStatus === 'followUp' && i === currentStepIndex,
+        completed: clientStatus === 'completed' && i === currentStepIndex,
+        clicked: checkClicked(i),
+        disabled: !isStepEnabled(i)
+      }"
+      (click)="goToStep(i);onStatusClick(i);checkClicked(i)"
+    >
+      <span class="label">{{ step }}</span>
+    </div>
+    
+  </div> -->
+  <div class="stepper-container">
+    <div *ngFor="let step of steps; let i = index" class="step-wrapper">
+      <!-- Step -->
+       
+      <div
+        class="step"
+        [ngClass]="{
+          due: clientStatus === 'due' && i === currentStepIndex,
+          'follow-up': clientStatus === 'followUp' && i === currentStepIndex,
+          completed: clientStatus === 'completed' && i === currentStepIndex,
+          clicked: checkClicked(i),
+          disabled: !isStepEnabled(i)
+        }"
+        (click)= "goToStep(i); onStatusClick(i); checkClicked(i)"
+      >
+        <span class="label">{{ step }}</span>
+      </div>
+  
+      <!-- Connecting Pipe    [ngClass]="{ highlighted: i < currentStepIndex }"-->
+      <div
+        *ngIf="i < steps.length - 1"
+        class="pipe"
+      
+        [ngClass]="{
+            'follow-upHighlighted': clientStatus === 'followUp' && i < currentStepIndex,
+            completedHighlighted: clientStatus === 'completed' && i < currentStepIndex,
+            clicked: checkClicked(i),
+            disabled: !isStepEnabled(i)
+          }"
+      ></div>
+    </div>
+  </div>
+  <div class="stepper custom-margin">
+    <div [class]="themeClass" class="grid">
+        <ag-grid-angular
+          style="height: 100%"
+          (gridReady)="onGridReady($event)"
+          [columnDefs]="columnDefs"
+          [rowData]="rowData"
+          [defaultColDef]="defaultColDef"
+          [rowHeight]="rowHeight"
+          [autoSizeStrategy]="autoSizeStrategy"
+          [pagination]="pagination"
+          [paginationPageSize]="paginationPageSize"
+          [paginationPageSizeSelector]="paginationPageSizeSelector"
+        ></ag-grid-angular>
+
+        <!-- [pagination]="pagination"
+        [paginationPageSize]="paginationPageSize"
+        [paginationPageSizeSelector]="paginationPageSizeSelector" -->
+    </div>
+
+</div>
+  <div  *ngIf="clientStatus != 'completed'">
+    <button type="button" class="btn btn-warning" *ngIf="clientStatus == 'due'" (click)="toggleFollowUp()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">{{'Follow up'}}
+    </button>
+    <button type="button" class="btn btn-success" (click)="togglePayment()" [attr.aria-expanded]="!isCollapsedPayment" aria-controls="collapseBasicForPayment">{{'Payment'}}
+    </button>
+    <hr>
+    <div id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true">
+        <h2>Followup</h2>
+        <div class="form-group autocomplete">
+            <label for="client">Client:</label>
+            <input type="text" id="client" name="client" placeholder="Type to search...">
+        </div>
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" value="2024-11-17">
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact Person:</label>
+            <input type="text" id="contact" name="contact" value="Mani">
+        </div>
+        <div class="form-group">
+            <label for="mob">Mobile:</label>
+            <input type="text" id="mob" name="mob" value="9876543210" readonly>
+        </div>
+        <div class="form-group">
+            <label for="comments">Comments:</label>
+            <textarea id="comments" name="comments" rows="3">tomorrow 15k collection need to be done</textarea>
+        </div>
+        <div class="form-group">
+            <label for="reminder">Next Reminder:</label>
+            <input type="date" id="reminder" name="reminder" value="2024-11-17">
+        </div>
+        <div class="button-group">
+            <button class="ok">OK</button>
+            <button class="cancel">Cancel</button>
+        </div>
+    </div>
+    <div id="collapseBasicForPayment" [collapse]="isCollapsedPayment" [isAnimated]="true">
+        <h2>Payments</h2>
+    <div class="form-group">
+        <label for="collection-date">Collection Date:</label>
+        <input type="date" id="collection-date" name="collection-date" value="2024-11-16">
+    </div>
+    <div class="form-group">
+        <label for="client">Client:</label>
+        <input type="text" id="client" name="client" value="ABC Enterprises">
+    </div>
+    <div class="form-group">
+        <label for="due-amount">Due Amount:</label>
+        <input type="number" id="due-amount" name="due-amount" value="42000.00" readonly>
+    </div>
+    <div class="form-group">
+        <label for="payment-mode">Payment Mode:</label>
+        <select id="payment-mode" name="payment-mode">
+            <option value="cheque" selected>Cheque</option>
+            <option value="cash">Cash</option>
+            <option value="online">Online</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="cheque-no">ChNo.:</label>
+        <input type="text" id="cheque-no" name="cheque-no" value="123456A">
+    </div>
+    <div class="form-group">
+        <label for="paid-amount">Paid Amount:</label>
+        <input type="number" id="paid-amount" name="paid-amount" value="30000.00">
+    </div>
+    <div class="form-group">
+        <label for="deposit-date">Deposit Date:</label>
+        <input type="date" id="deposit-date" name="deposit-date" value="2024-11-17">
+    </div>
+    <div class="form-group half-width">
+        <label for="balance">Balance:</label>
+        <input type="number" id="balance" name="balance" value="12000.00" readonly>
+    </div>
+    <div class="form-group half-width">
+        <label for="next-reminder-date">Next Reminder Date:</label>
+        <input type="date" id="next-reminder-date" name="next-reminder-date" value="2024-11-17">
+    </div>
+    <button class="btn btn-success">OK</button>
+    </div>
+  </div>
+ 
+
+
+ <!-- <button type="button" class="btn btn-primary" (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">Toggle collapse
+</button>
+<hr>
+<div id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true">
+  <div class="well well-lg card card-block card-header">Some content</div>
+</div> -->
+ 
