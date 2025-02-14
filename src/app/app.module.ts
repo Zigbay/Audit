@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CollapseModule } from 'ngx-bootstrap/collapse'; 
+import { ClientProfileService } from './pages/client-profile/client-profile.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -27,6 +29,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
    AppRoutingModule,
     CommonModule,

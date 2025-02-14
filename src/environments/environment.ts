@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  APP_CONTEXT:'/medEngage/'
+  APP_CONTEXT:'/dueTrack/',
+   apiBaseUrl: 'http://localhost:8000/duetrack/api'
 };
 
 /*

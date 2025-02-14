@@ -96,69 +96,24 @@ export class ClientDetailsComponent {
 
   rowData = getData();
   columnDefs = [
-    // {
-    //   field: 'client_id',
-    //   headerName: 'UID',
-    //  // cellRenderer: 'agGroupCellRenderer',
-    //   headerClass: 'header-product',
-    //   // minWidth: 300,
-    // },
     {
       field: 'client_name',
       headerName: 'Client',
       filter: true,
       headerClass: 'header-status',
     },
-
-    // {
-    //   field: 'contact_name',
-    //   headerName: 'Contact',
-    //   //filter: true,
-    //   headerClass: 'header-status',
-    // },
-    // {
-    //   field: 'email',
-    //   headerName: 'Email',
-    //  // filter: true,
-    //   headerClass: 'header-status',
-    // },
-    // {
-    //   field: 'phone',
-    //   headerName: 'Phone',
-    //   //filter: true,
-    //   headerClass: 'header-status',
-    // },
     {
       field: 'address',
       headerName: 'Address',
       //filter: true,
       headerClass: 'header-status',
     },
-    // {
-    //   field: 'payment_due_date',
-    //   headerName: 'Payment due date',
-    //  // filter: true,
-    //   headerClass: 'header-status',
-    // },
     {
       field: 'status',
       headerName: 'Status', 
-      // valueFormatter: statusFormatter,
-      // cellRenderer: StatusCellRenderer,
        filter: true,
-      // filterParams: {
-      //   valueFormatter: statusFormatter,
-      // },
-    // field: 'status',
-      // cellRenderer: 'agGroupCellRenderer',  // Use group cell renderer
-      // cellRendererParams: {
-      //   suppressCount: true,
-      //   innerRenderer: (params:any) => {
-      //     console.log(params);
-      //     return params.value;},
-      //  }
       cellRenderer:StatusDetailsComponent,
-      flex: 1,  //
+      flex: 1,  
     }
     
   ];
